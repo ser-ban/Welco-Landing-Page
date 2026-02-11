@@ -1,1 +1,4 @@
-project_id = "otxohyfdnxapigqozofc"
+# Only needed if you use the Supabase CLI (e.g. supabase link, supabase db push).
+# The app uses VITE_SUPABASE_URL from .env — it does not read this file.
+# Get the ref from your Project URL: https://YOUR_REF.supabase.co → project_id = "YOUR_REF"
+# project_id = "your_project_ref"
