@@ -99,6 +99,9 @@ const WelcoLanding = () => {
     document.getElementById("signup")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const WAITLIST_RATE_LIMIT_MS = 60 * 1000; // 1 minute
+  const WAITLIST_LAST_SUBMIT_KEY = "welco_waitlist_last_submit";
+
   const handleWaitlistSignup = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -109,6 +112,20 @@ const WelcoLanding = () => {
         variant: "destructive",
       });
       return;
+    }
+
+    const lastSubmit = localStorage.getItem(WAITLIST_LAST_SUBMIT_KEY);
+    if (lastSubmit) {
+      const elapsed = Date.now() - Number(lastSubmit);
+      if (elapsed < WAITLIST_RATE_LIMIT_MS) {
+        const waitSec = Math.ceil((WAITLIST_RATE_LIMIT_MS - elapsed) / 1000);
+        toast({
+          title: "Please wait a moment",
+          description: `You can add another email in about ${waitSec} second${waitSec === 1 ? "" : "s"}. We limit signups to once per minute.`,
+          variant: "destructive",
+        });
+        return;
+      }
     }
 
     setIsLoading(true);
@@ -126,6 +143,7 @@ const WelcoLanding = () => {
           throw error;
         }
       } else {
+        localStorage.setItem(WAITLIST_LAST_SUBMIT_KEY, String(Date.now()));
         toast({
           title: "You're on the list",
           description: "We'll contact you as soon as early access opens.",
