@@ -1,6 +1,6 @@
 # Welco Landing Page
 
-Landing page for Welco — AI Assistant for Romanian Vacation Rentals.
+Landing page for Welco — AI Assistant for Vacation Rentals.
 
 ## Tech stack
 
